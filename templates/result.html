@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <h2 class="text-center mb-4">ผลลัพธ์</h2>
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">สูตรอาหารที่เหมาะสมที่สุด</h5>
+                <p class="card-text">โปรตีน: {{ best_food['โปรตีน (g)'] }} g</p>
+                <p class="card-text">ไขมัน: {{ best_food['ไขมัน (g)'] }} g</p>
+                <p class="card-text">คาร์โบไฮเดรต: {{ best_food['คาร์โบไฮเดรต (g)'] }} g</p>
+                <p class="card-text">ราคา: {{ best_food['ราคา (บาท)'] }} บาท</p>
+                <p class="card-text">ค่าฟิตเนส: {{ best_fitness|round(2) }}</p>
+            </div>
+        </div>
+        <div class="text-center">
+            <a href="{{ url_for('fitness_data') }}" class="btn btn-info btn-lg">แสดงข้อมูลฟิตเนส</a>
+            <a href="{{ url_for('create') }}" class="btn btn-secondary btn-lg">เริ่มใหม่</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

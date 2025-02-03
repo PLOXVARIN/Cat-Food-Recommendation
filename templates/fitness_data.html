@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <h2 class="text-center mb-4">ข้อมูลฟิตเนสทุกเจน</h2>
+        
+        <!-- คำนวณค่าฟิตเนสที่ดีที่สุดจาก all_generations -->
+        {% set best_fitness_overall = all_generations|map(attribute='best_fitness_in_generation')|max %}
+        {% set best_generation = all_generations|selectattr('best_fitness_in_generation', 'equalto', best_fitness_overall)|map(attribute='generation')|first %}
+
+        <!-- แสดงค่าฟิตเนสที่ดีที่สุดและเจนที่พบ -->
+        <div class="alert alert-success text-center">
+            <h4>ค่าฟิตเนสที่ดีที่สุด: {{ best_fitness_overall|round(2) }}</h4>
+            <h4>พบในเจนที่: {{ best_generation }}</h4>
+        </div>
+
+        {% for gen in all_generations %}
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="card-title">เจนที่ {{ gen.generation }}</h5>
+            </div>
+            <div class="card-body">
+                <!-- แสดงค่าฟิตเนสที่ดีที่สุดในเจนนี้ -->
+                <div class="alert alert-info">
+                    <strong>ค่าฟิตเนสที่ดีที่สุดในเจนนี้:</strong> {{ gen.best_fitness_in_generation|round(2) }}
+                </div>
+
+                <!-- แสดงตารางประชากรและค่าฟิตเนส -->
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                           
+                            <th>โปรตีน (g)</th>
+                            <th>ไขมัน (g)</th>
+                            <th>คาร์โบไฮเดรต (g)</th>
+                            <th>ราคา (บาท)</th>
+                            <th>ค่าฟิตเนส</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in range(gen.population|length) %}
+                        <tr>
+                            
+                            <td>{{ gen.population[i]['โปรตีน (g)'] }}</td>
+                            <td>{{ gen.population[i]['ไขมัน (g)'] }}</td>
+                            <td>{{ gen.population[i]['คาร์โบไฮเดรต (g)'] }}</td>
+                            <td>{{ gen.population[i]['ราคา (บาท)'] }}</td>
+                            <td>
+                                {% if gen.fitness_scores[i] is defined and gen.fitness_scores[i] is not none %}
+                                    {{ gen.fitness_scores[i]|round(2) }}
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

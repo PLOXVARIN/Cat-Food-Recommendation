@@ -146,7 +146,6 @@ def display_results(best_food, best_fitness, all_generations, best_generation):
             # แสดงค่าสถิติเสริม
             print(f"\nสถิติรุ่นนี้:")
             print(f"- Fitness สูงสุด: {max(gen['fitness_scores']):.2f}")
-            print(f"- Fitness เฉลี่ย: {sum(gen['fitness_scores'])/len(gen['fitness_scores']):.2f}")
             print(f"- Fitness ต่ำสุด: {min(gen['fitness_scores']):.2f}")
             
             if input("\nกด Enter เพื่อดูรุ่นถัดไป หรือพิมพ์ 'q' เพื่อออก: ").lower() == 'q':

@@ -1,23 +1,217 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-6 offset-md-3">
-        <h2 class="text-center mb-4">ผลลัพธ์</h2>
-        <div class="card mb-4">
-            <div class="card-body">
-                <h5 class="card-title">สูตรอาหารที่เหมาะสมที่สุด</h5>
-                <p class="card-text">โปรตีน: {{ best_food['โปรตีน (g)'] }} g</p>
-                <p class="card-text">ไขมัน: {{ best_food['ไขมัน (g)'] }} g</p>
-                <p class="card-text">คาร์โบไฮเดรต: {{ best_food['คาร์โบไฮเดรต (g)'] }} g</p>
-                <p class="card-text">ราคา: {{ best_food['ราคา (บาท)'] }} บาท</p>
-                <p class="card-text">ค่าฟิตเนส: {{ best_fitness|round(2) }}</p>
-            </div>
+
+<style>
+    /* รีเซ็ตค่าเริ่มต้น */
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+font-family: 'Poppins', sans-serif;
+}
+
+body {
+background-color: #fdfaf6;
+color: #333;
+}
+
+/* Header */
+header {
+background: linear-gradient(135deg, #f3ead7, #fcf3de);
+padding: 30px 0;
+text-align: center;
+}
+
+header h1 {
+font-size: 28px;
+color: #333;
+font-weight: 600;
+}
+
+/* Navigation */
+nav {
+background: white;
+padding: 15px 0;
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+nav ul {
+list-style: none;
+display: flex;
+justify-content: center;
+gap: 40px;
+}
+
+nav ul li {
+display: inline;
+}
+
+nav ul li a {
+text-decoration: none;
+color: #140e93;
+font-weight: 500;
+font-size: 16px;
+padding: 10px 15px;
+transition: all 0.3s ease-in-out;
+border-radius: 5px;
+}
+
+nav ul li a:hover {
+background: rgba(75, 69, 196, 0.1);
+color: #100d54;
+}
+
+/* Hero Section */
+.hero {
+display: flex;
+justify-content: center;
+align-items: center;
+text-align: center;
+padding: 80px 20px;
+max-width: 800px;
+margin: auto;
+}
+
+.hero h2 {
+font-size: 32px;
+font-weight: 600;
+color: #333;
+}
+
+.hero p {
+font-size: 18px;
+margin: 15px 0;
+color: #555;
+}
+
+/* CTA Button */
+.cta-btn {
+background: #cac2b2;
+color: white;
+padding: 12px 20px;
+border-radius: 25px;
+text-decoration: none;
+font-size: 16px;
+font-weight: bold;
+display: inline-block;
+transition: all 0.3s ease-in-out;
+margin-top: 15px;
+}
+
+.cta-btn:hover {
+background: #a29e95;
+transform: scale(1.05);
+}
+
+/* การจัดกรอบใน main */
+main {
+display: flex;
+justify-content: center;  
+align-items: center;       
+height: 100vh;            
+}
+
+.result-section {
+background-color: #ffffff;  /* สีพื้นหลัง */
+padding: 20px 30px;         /* เพิ่มระยะห่างภายใน */
+border-radius: 12px;        /* ขอบมน */
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* เพิ่มเงาให้กรอบ */
+width: 90%;                 /* ความกว้างของกรอบ */
+max-width: 700px;           /* ขนาดสูงสุด */
+text-align: center;         /* จัดข้อความให้อยู่กลาง */
+margin: 20px;               /* ระยะห่างจากขอบหน้าจอ */
+}
+
+.result-section h5 {
+font-size: 1.5rem;
+color: #388e3c;  /* สีเขียวเข้ม */
+margin-bottom: 20px;
+font-weight: 600;
+}
+
+.result-section p {
+font-size: 1.1rem;
+color: #555;
+line-height: 1.6;
+margin-bottom: 15px; /* เพิ่มระยะห่างระหว่างบรรทัด */
+}
+
+.result-section .btn-container {
+display: flex;
+gap: 15px;              /* ระยะห่างระหว่างปุ่ม */
+justify-content: center; /* จัดปุ่มให้อยู่กลาง */
+margin-top: 20px;        /* เพิ่มระยะห่างจากเนื้อหาด้านบน */
+}
+
+.result-section .btn-container a {
+background-color: #877f6f;
+color: white;
+padding: 12px 25px;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+text-decoration: none;
+font-size: 16px;
+transition: background-color 0.3s ease;
+}
+
+.result-section .btn-container a:hover {
+background-color: #a29e95;
+}
+
+</style>
+
+<header>
+    <h1>🐾 แสดงผลลัพธ์</h1>
+</header>
+
+<nav>
+    <ul>
+        <li class="nav-item">
+            <a class="nav-link" href="/">หน้าแรก</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/create">สร้างรุ่น</a>
+        </li>
+    </ul>
+</nav>
+
+<main>
+    <section class="result-section">
+        <h5 class="card-title">สูตรอาหารที่เหมาะสมที่สุด</h5>
+        <p class="card-text">โปรตีน: {{ best_food['โปรตีน (g)'] }} g</p>
+        <p class="card-text">ไขมัน: {{ best_food['ไขมัน (g)'] }} g</p>
+        <p class="card-text">คาร์โบไฮเดรต: {{ best_food['คาร์โบไฮเดรต (g)'] }} g</p>
+        <p class="card-text">ราคา: {{ best_food['ราคา (บาท)'] }} บาท</p>
+        <p class="card-text">ค่าฟิตเนส: {{ best_fitness|round(2) }}</p>
+
+        <!-- ปุ่มในกรอบ -->
+        <div class="btn-container">
+            <a href="{{ url_for('fitness_data') }}">แสดงข้อมูลฟิตเนส</a>
+            <a href="{{ url_for('create') }}">เริ่มใหม่</a>
         </div>
-        <div class="text-center">
-            <a href="{{ url_for('fitness_data') }}" class="btn btn-info btn-lg">แสดงข้อมูลฟิตเนส</a>
-            <a href="{{ url_for('create') }}" class="btn btn-secondary btn-lg">เริ่มใหม่</a>
+    </section>
+</main>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-section">
+            <h3>ติดต่อเรา</h3>
+            <p>Email: แหนมตุ้มจิ๋ว@cat.com</p>
+            <p>Phone: 062-580-9554</p>
+        </div>
+
+        <div class="footer-section">
+            <h3>เกี่ยวกับเรา</h3>
+            <p>ระบบแนะนำอาหารแมวของเราใช้เทคโนโลยีที่ทันสมัยในการแนะนำอาหารแมวที่เหมาะสมที่สุดสำหรับลูกน้อยคุณ 
+            โดยคำนึงถึงคุณภาพของอาหาร</p>
         </div>
     </div>
-</div>
+
+    <div class="footer-bottom">
+        <p>&copy; 2025 Comsci Datamining. All rights reserved.</p>
+    </div>
+</footer>
+
 {% endblock %}

@@ -1,8 +1,226 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="text-center">
-    <h1>ยินดีต้อนรับ</h1>
-    <a href="{{ url_for('create') }}" class="btn btn-primary btn-lg">เริ่มต้น</a>
-</div>
+
+<style>
+    /* รีเซ็ตค่าเริ่มต้น */
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+font-family: 'Poppins', sans-serif;
+}
+
+body {
+background-color: #fdfaf6;
+color: #333;
+}
+
+/* Header */
+header {
+background: linear-gradient(135deg, #f3ead7, #fcf3de);
+padding: 30px 0;
+text-align: center;
+}
+
+header h1 {
+font-size: 28px;
+color: #333;
+font-weight: 600;
+}
+
+/* Navigation */
+nav {
+background: white;
+padding: 15px 0;
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+nav ul {
+list-style: none;
+display: flex;
+justify-content: center;
+gap: 40px;
+}
+
+nav ul li {
+display: inline;
+}
+
+nav ul li a {
+text-decoration: none;
+color: #140e93;
+font-weight: 500;
+font-size: 16px;
+padding: 10px 15px;
+transition: all 0.3s ease-in-out;
+border-radius: 5px;
+}
+
+nav ul li a:hover {
+background: rgba(75, 69, 196, 0.1);
+color: #100d54;
+}
+
+/* Hero Section */
+.hero {
+display: flex;
+justify-content: center;
+align-items: center;
+text-align: center;
+padding: 80px 20px;
+max-width: 800px;
+margin: auto;
+}
+
+.hero h2 {
+font-size: 32px;
+font-weight: 600;
+color: #333;
+}
+
+.hero p {
+font-size: 18px;
+margin: 15px 0;
+color: #555;
+}
+
+/* CTA Button */
+.cta-btn {
+background: #cac2b2;
+color: white;
+padding: 12px 20px;
+border-radius: 25px;
+text-decoration: none;
+font-size: 16px;
+font-weight: bold;
+display: inline-block;
+transition: all 0.3s ease-in-out;
+margin-top: 15px;
+}
+
+.cta-btn:hover {
+background: #a29e95;
+transform: scale(1.05);
+}
+/* กำหนดให้ body ของหน้าเว็บเต็มขนาดจอ */
+body {
+display: flex;
+flex-direction: column;
+height: 100vh; /* ทำให้ body ใช้ความสูงของหน้าจอทั้งหมด */
+margin: 0;
+}
+
+main {
+display: flex;
+justify-content: center;  /* จัดให้อยู่กึ่งกลางแนวนอน */
+align-items: center;       /* จัดให้อยู่กึ่งกลางแนวตั้ง */
+height: 100vh;            /* ใช้เต็มความสูงของหน้าจอ */
+}
+
+
+footer {
+background-color: #f3ead7; /* สีครีม/สีไข่ */
+color: #333; /* สีเทาเข้มสำหรับข้อความ */
+text-align: center;
+padding: 40px 0;
+font-family: Arial, sans-serif;
+font-size: 14px;
+}
+
+.footer-container {
+display: flex;
+justify-content: space-between;
+align-items: center;
+max-width: 1100px;
+margin: 0 auto;
+padding: 20px;
+}
+
+.footer-contact {
+text-align: left;
+}
+
+.footer-contact h3 {
+font-size: 18px;
+margin-bottom: 8px;
+}
+
+.footer-contact p {
+margin: 5px 0;
+}
+
+.footer-bottom {
+text-align: center;
+border-top: 1px solid #d1c4a8; /* เส้นแบ่งบางๆ */
+padding-top: 15px;
+font-size: 12px;
+margin-top: 15px;
+}
+
+.footer-section {
+flex: 1; /* ให้แต่ละส่วนมีขนาดเท่ากัน */
+min-width: 300px;
+text-align: left;
+}
+
+.footer-section h3 {
+font-size: 18px;
+margin-bottom: 10px;
+}
+
+.footer-section p {
+font-size: 14px;
+line-height: 1.6;
+color: #555;
+}
+
+</style>
+
+<header>
+    <div class="container">
+        <h1>🐾 Cat Food Recommende</h1>
+    </div>
+</header>
+
+<nav>
+    <ul>
+        <li class="nav-item">
+            <a class="nav-link" href="/">หน้าแรก</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/create">สร้างรุ่น</a>
+        </li>
+    </ul>
+</nav>
+
+<main>
+    <section class="hero">
+        <div class="content">
+            <h2>ยินดีต้อนรับ!</h2>
+            <p>โปรแกรมนี้ใช้ Genetic Algorithm เพื่อแนะนำอาหารแมวที่เหมาะกับแมวของคุณที่สุด</p>
+            <a href="/create" class="cta-btn">เริ่มเลย!</a>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-section">
+            <h3>ติดต่อเรา</h3>
+            <p>Email: แหนมตุ้มจิ๋ว@cat.com</p>
+            <p>Phone: 062-580-9554</p>
+        </div>
+
+        <div class="footer-section">
+            <h3>เกี่ยวกับเรา</h3>
+            <p>ระบบแนะนำอาหารแมวของเราใช้เทคโนโลยีที่ทันสมัยในการแนะนำอาหารแมวที่เหมาะสมที่สุดสำหรับลูกน้อยคุณ 
+            โดยคำนึงถึงคุณภาพของอาหาร</p>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; 2025 Comsci Datamining. All rights reserved.</p>
+    </div>
+</footer>
 {% endblock %}

@@ -1,6 +1,78 @@
 {% extends "base.html" %}
 
 {% block content %}
+<style>
+    /* ปรับแต่ง CSS */
+    body {
+        background-color: #f9f7f1; /* สีพื้นหลังให้ดูนุ่มนวล */
+        font-family: 'Poppins', sans-serif;
+        padding-top: 30px;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .card {
+        border-radius: 10px;
+        border: none;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        padding: 15px;
+        background-color: #f0e9d7; /* สีครีมอ่อน */
+    }
+
+    .card-title {
+        font-size: 20px;
+        font-weight: 500;
+    }
+
+    .alert-info {
+        margin-bottom: 20px;
+        background-color: #877f6f;
+        color: white;
+        border: 1px solid #090909; /* สีกรอบครีม */
+    }
+
+    .alert-success {
+        margin-bottom: 30px;
+    }
+
+    table {
+        background-color: #f3ead7; /* สีครีมสำหรับตาราง */
+        width: 100%; /* ให้ตารางเต็มความกว้าง */
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    table th, table td {
+        text-align: center;
+        padding: 12px; /* เพิ่มระยะห่าง */
+        border: 1px solid #e2d7b2; /* สีกรอบที่เหมาะสม */
+    }
+
+    table th {
+        background-color: #f1e4c2; /* สีครีมอ่อนสำหรับหัวตาราง */
+        color: #5b4f3d; /* สีตัวอักษรเข้ม */
+        font-weight: bold;
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: #faf5e1; /* สีครีมอ่อนสำหรับแถวสลับ */
+    }
+
+    .alert-success h4 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #5b4f3d; /* สีเข้มสำหรับข้อความ */
+    }
+</style>
+
 <div class="row">
     <div class="col-md-8 offset-md-2">
         <h2 class="text-center mb-4">ข้อมูลฟิตเนสทุกเจน</h2>
@@ -10,7 +82,7 @@
         {% set best_generation = all_generations|selectattr('best_fitness_in_generation', 'equalto', best_fitness_overall)|map(attribute='generation')|first %}
 
         <!-- แสดงค่าฟิตเนสที่ดีที่สุดและเจนที่พบ -->
-        <div class="alert alert-success text-center">
+        <div class="alert alert-success text-center" style="background-color: #f3ead7; color: #5b4f3d; border: 1px solid #e2d7b2;">
             <h4>ค่าฟิตเนสที่ดีที่สุด: {{ best_fitness_overall|round(2) }}</h4>
             <h4>พบในเจนที่: {{ best_generation }}</h4>
         </div>
@@ -27,10 +99,9 @@
                 </div>
 
                 <!-- แสดงตารางประชากรและค่าฟิตเนส -->
-                <table class="table table-bordered">
+                <table class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                           
                             <th>โปรตีน (g)</th>
                             <th>ไขมัน (g)</th>
                             <th>คาร์โบไฮเดรต (g)</th>
@@ -41,7 +112,6 @@
                     <tbody>
                         {% for i in range(gen.population|length) %}
                         <tr>
-                            
                             <td>{{ gen.population[i]['โปรตีน (g)'] }}</td>
                             <td>{{ gen.population[i]['ไขมัน (g)'] }}</td>
                             <td>{{ gen.population[i]['คาร์โบไฮเดรต (g)'] }}</td>
